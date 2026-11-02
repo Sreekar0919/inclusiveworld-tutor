@@ -1,0 +1,35 @@
+[build]
+python_version = "3.11"
+
+[env]
+HF_HUB_ENABLE_HF_TRANSFER = "1"
+TRANSFORMERS_CACHE = "/tmp/transformers_cache"
+HF_HOME = "/tmp/hf_home"
+
+[system_packages]
+# Add any system packages if needed
+
+[models]
+# Preload models for faster startup
+"meta-llama/Meta-Llama-3.1-8B-Instruct" = "llama-3.1-8b"
+"sentence-transformers/all-MiniLM-L6-v2" = "all-minilm-l6-v2"
+
+[datasets]
+# Add any datasets if needed
+
+[hardware]
+# Hardware requirements for Gradio
+cpu = "4"
+memory = "16GB"
+disk = "20GB"
+
+[gradio]
+# Gradio specific settings
+title = "AI Curriculum Assistant"
+emoji = "🤖"
+colorFrom = "blue"
+colorTo = "purple"
+sdk = "gradio"
+sdk_version = "4.0.0"
+app_file = "app.py"
+pinned = false 
