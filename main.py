@@ -28,7 +28,6 @@ def build_app() -> gr.Blocks:
     client = get_client()
     rag = RagTutor(vector_db=vector_db, slides_dir=paths.slides_dir, anthropic_client=client)
 
-    # --- helpers ---
     def _get_profile(student_id: str) -> StudentProfile | None:
         return load_profile(paths.profiles_dir, student_id)
 
@@ -51,7 +50,7 @@ def build_app() -> gr.Blocks:
 
     def rag_chat(query: str, show_context_pages: bool, hd: bool):
         out = rag.chat(query, show_context_pages=show_context_pages, hd=hd)
-        # UX: single best slide preview + optional related pages (accordion handled in UI)
+        # best slide preview, plus related pages if asked for
         return out.answer_md, out.related
 
     def _curriculum_snippets_for_topic(topic: str) -> str:
@@ -79,7 +78,7 @@ def build_app() -> gr.Blocks:
 
     def run_code(code: str):
         rr = run_student_code(code or "")
-        # store structured RunResult in state by converting to dict-like tuple
+        # keep the RunResult in state for the coach
         display = rr.stdout_stderr
         return display, rr
 
@@ -97,7 +96,6 @@ def build_app() -> gr.Blocks:
         history.append((msg, reply))
         return history, ""
 
-    # --- UI ---
     css = """
     .gradio-container { font-size: 16px !important; }
     .iw_md { font-size: 18px !important; line-height: 1.6 !important; }
@@ -165,7 +163,7 @@ def build_app() -> gr.Blocks:
                         run_state = gr.State(value=None)  # stores RunResult
 
                 gen_btn.click(fn=generate_practice, inputs=[student_id, topic, problem_type], outputs=[problem_md, starter])
-                # When starter code is generated, copy it into the main editor too (UX)
+                # copy generated starter code into the editor
                 gen_btn.click(fn=lambda c: c, inputs=[starter], outputs=[code])
 
                 run_btn.click(fn=run_code, inputs=[code], outputs=[terminal, run_state])

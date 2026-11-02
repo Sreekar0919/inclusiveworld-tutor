@@ -47,8 +47,6 @@ Both are git-ignored, and so is `Slides/`: the course slides belong to the cours
 | `about_me_ingest.py`, `profile_store.py` | About-Me PDF → student profile → JSON storage |
 | `problem_gen.py`, `runner.py`, `coach.py` | Practice problems, code execution, debugging coach |
 | `anthropic_client.py`, `settings.py` | Claude client, paths and model settings |
-| `experiments/` | Earlier Ollama + LlamaIndex prototypes (not part of the app) |
-| `docs/code_practice.md` | Design notes for the Code Practice tab |
 
 ## Tech
 
